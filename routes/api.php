@@ -17,10 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 /** */
-Route::get('/users', 'Api\\UserController@index');
-Route::get('/users/{id}', 'Api\\UserController@show');
-Route::post('/users', 'Api\\UserController@store');
-Route::put('/users/{id}', 'Api\\UserController@update');
 
-Route::get('/sectors', 'Api\\SectorController@index');
-Route::post('/sectors', 'Api\\SectorController@store');
+
+Route::resource('/users', 'Api\\UserController');
+Route::resource('/sectors', 'Api\\SectorController');
+Route::resource('/events', 'Api\\EventController');
+Route::resource('/places', 'Api\\PlaceController');
+Route::resource('/resources', 'Api\\ResourceController');

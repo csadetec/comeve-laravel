@@ -1,40 +1,44 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
+use App\Event;
 
-class UserController extends Controller
+class EventController extends Controller
 {
 
   public function index()
   {
-    $users = User::all();
-    
-    return $users;
+    $events = Event::all();
+
+    foreach($events as $r){
+      $r->user = $r->user;
+    }
+
+    return $events;
+
+
   }
 
-  /**
-   * Store a newly created resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @return \Illuminate\Http\Response
-   */
   public function store(Request $request)
   {
-    //
+    $data = $request->only(['name', 'date', 'start', 'end', 'place_id']);
+    $data['user_id'] = 1;
+    $event = new Event();
+
+    return $event->create($data);
+
   }
 
-  /**
-   * Display the specified resource.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
   public function show($id)
   {
-    //
+    $event = Event::find($id);
+
+    $event->user = $event->user;
+
+    return $event;
   }
 
   /**

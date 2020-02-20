@@ -13,6 +13,11 @@ class UserController extends Controller
   public function index()
   {
     $users = User::all();
+    //$users->sector = $users->sector;
+    foreach($users as $r){
+      $r->sector = $r->sector;
+    }
+
     
     return $users;
   }

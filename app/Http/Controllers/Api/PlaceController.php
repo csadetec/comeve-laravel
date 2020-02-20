@@ -4,39 +4,45 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Sector;
+use App\Place;
 
-class SectorController extends Controller
+class PlaceController extends Controller
 {
 
   public function index()
   {
-    $sectors = Sector::all();
+    $places = Place::all();
 
-    return $sectors;
+    return $places;
   }
+
 
   public function store(Request $request)
   {
     $data = $request->only(['name']);
-    
-    $sector = new Sector();
 
-    return $sector->create($data);
+    $place = new Place();
 
+    return $place->create($data);
   }
-
 
   public function show($id)
   {
-    $user = Sector::find($id);
+    $place = Place::find($id);
 
-    return $user;
+    return $place;
   }
+
 
   public function update(Request $request, $id)
   {
-    //
+    $data = $request->only(['name']);
+    $place =  Place::find($id);
+
+    $place->update($data);
+
+    return $place;
+
   }
 
 
