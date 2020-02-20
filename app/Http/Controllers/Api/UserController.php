@@ -5,81 +5,63 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-   
-    public function index()
-    {
-        $users = User::all();
 
-        return $users;
+  public function index()
+  {
+    $users = User::all();
+
+    return $users;
+  }
+
+
+  public function store(Request $request)
+  {
+    $data = $request->only(['username', 'name', 'email', 'password', 'sector_id']);
+
+    $username =  User::where('username',$request->username)->first();
+
+    if ($username) {
+      //return $username;
+      return ['message' => 'Usuário já Cadastrado'];
     }
 
- 
-    public function store(Request $request)
-    {
-        $data = $request->only(['username', 'name', 'email', 'password', 'sector_id']);
-        
-        $username =  User::where('username', $data['username'])->first();
-        
-        if($username){
-            //return $username;
-            return ['message'=>'Usuário já Cadastrado'];
-        }
+    $email = User::where('email', $request->email)->first();
 
-        $email = User::where('email', $data['email'])->first();
-    
-        if ($email) {
-          return ['message'=>'Email ja cadastrado'];
-        }
-        
-        if($data['password'] === null){
-          return ['message'=>'O Campo senha é obrigatório '];
-        }
-    
-       
-    
-       
-    
-        const user = await User.create(data)
-    
-        return user
-        /** */
-        //return $data;
+    if ($email) {
+      return ['message' => 'Email ja cadastrado'];
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    if (empty($request->password)) {
+      return ['message' => 'O Campo senha é obrigatório '];
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    $user = new User();
+    return $user->create($data);
+
+
+  }
+
+
+  public function show($id)
+  { 
+    
+    $user = User::find($id);
+
+    return $user;
+  }
+
+  public function update(Request $request, $id)
+  {
+    //
+  }
+
+  public function destroy($id)
+  {
+    //
+  }
 }
