@@ -20,3 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/users', 'Api\\UserController@index');
 Route::get('/users/{id}', 'Api\\UserController@show');
 Route::post('/users', 'Api\\UserController@store');
+Route::put('/users/{id}', 'Api\\UserController@update');
+
+Route::get('/sectors', 'Api\\SectorController@index');
+Route::post('/sectors', 'Api\\SectorController@store');

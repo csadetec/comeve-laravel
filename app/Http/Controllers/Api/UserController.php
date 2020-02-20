@@ -13,7 +13,7 @@ class UserController extends Controller
   public function index()
   {
     $users = User::all();
-
+    
     return $users;
   }
 
@@ -22,14 +22,7 @@ class UserController extends Controller
   {
     $data = $request->only(['username', 'name', 'email', 'password', 'sector_id']);
 
-    $username =  User::where('username',$request->username)->first();
-
-    if ($username) {
-      //return $username;
-      return ['message' => 'Usuário já Cadastrado'];
-    }
-
-    $email = User::where('email', $request->email)->first();
+    $email = User::where('email', $data['email'])->first();
 
     if ($email) {
       return ['message' => 'Email ja cadastrado'];
@@ -49,15 +42,22 @@ class UserController extends Controller
 
   public function show($id)
   { 
-    
     $user = User::find($id);
+    $user->sector = $user->sector;
+    //return $user;
 
     return $user;
   }
 
   public function update(Request $request, $id)
   {
-    //
+    $data = $request->only(['name', 'email', 'password', 'sector_id']);
+    $user = User::find($id);
+  
+    $user->update($data);
+    //return $data;
+    return $user;
+   
   }
 
   public function destroy($id)
