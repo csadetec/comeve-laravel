@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Event;
-
+use App\Http\Controllers\Api\EventResourceController;
+//$teste = new EventResourceController();
 class EventController extends Controller
 {
 
@@ -15,6 +16,8 @@ class EventController extends Controller
 
     foreach($events as $r){
       $r->user = $r->user;
+      $r->place = $r->place;
+      $r->resources = $r->resources;
     }
 
     return $events;
@@ -26,9 +29,17 @@ class EventController extends Controller
   {
     $data = $request->only(['name', 'date', 'start', 'end', 'place_id']);
     $data['user_id'] = 1;
+    $resources = $request->itensResources;
+
     $event = new Event();
 
-    return $event->create($data);
+    $event =  $event->create($data);
+   
+    $er = new EventResourceController();
+
+    $er->store($event->id, $resources);
+    
+    return $event;
 
   }
 
@@ -37,28 +48,32 @@ class EventController extends Controller
     $event = Event::find($id);
 
     $event->user = $event->user;
+    $event->place = $event->place;
+    $event->resources = $event->resources;
 
     return $event;
   }
 
-  /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request  $request
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
   public function update(Request $request, $id)
   {
-    //
+    $data = $request->only(['name', 'date', 'start', 'end', 'place_id']);
+    $resources = $request->itensResources;
+    
+    $er = new EventResourceController();
+
+    $er->store($id, $resources);
+    
+    $event = Event::find($id);
+
+    $event->update($data);
+    $event->resources = $event->resources;
+
+
+    return $event;
+    /** */
   }
 
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int  $id
-   * @return \Illuminate\Http\Response
-   */
+
   public function destroy($id)
   {
     //

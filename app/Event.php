@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Event extends Model
 {
@@ -13,5 +14,13 @@ class Event extends Model
   public function user(){
     return $this->belongsTo('App\User');
   }
-  
+
+  public function place(){
+    return $this->belongsTo('App\Place');
+  }
+
+  public function resources(){
+    return $this->belongsToMany('App\Resource', 'events_resources');
+  }
+
 }
