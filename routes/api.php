@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 /** */
 
-
+Route::post('login', 'Api\\AuthController@login');
 Route::resource('/users', 'Api\\UserController');
 Route::resource('/sectors', 'Api\\SectorController');
 Route::resource('/events', 'Api\\EventController');

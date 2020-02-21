@@ -33,12 +33,13 @@ class UserController extends Controller
       return ['message' => 'Email ja cadastrado'];
     }
 
-    if (empty($request->password)) {
+    if (empty($data['password'])) {
       return ['message' => 'O Campo senha é obrigatório '];
     }
 
 
     $user = new User();
+    $data['password'] = Hash::make($data['password']);
     return $user->create($data);
 
 
