@@ -11,6 +11,6 @@
 |
 */
 Route::get('/', function(){
-    $data['api'] = 'app comeve';
+    $data['api'] = 'app comeve sextou bb';
     return $data;
 });
