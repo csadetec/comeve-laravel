@@ -59,7 +59,14 @@ class UserController extends Controller
   {
     $data = $request->only(['name', 'email', 'password', 'sector_id']);
     $user = User::find($id);
-  
+
+    if($data['password']){
+      $data['password'] = Hash::make($data['password']);
+    }else{
+      unset($data['password']);
+    }
+    
+    //return $data;
     $user->update($data);
     //return $data;
     return $user;

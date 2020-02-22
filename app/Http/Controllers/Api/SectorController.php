@@ -36,7 +36,14 @@ class SectorController extends Controller
 
   public function update(Request $request, $id)
   {
-    //
+    $data = $request->only(['name']);
+
+    $sector = Sector::find($id);
+
+    $sector->update($data);
+
+    return $sector;
+
   }
 
 
