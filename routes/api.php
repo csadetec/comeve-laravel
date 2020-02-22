@@ -18,9 +18,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 /** */
 
-Route::post('login', 'Api\\AuthController@login');
+//Route::middleware('cors')->post('login', 'Api\\AuthController@login');
+Route::post('/login', 'Api\\AuthController@login');
 Route::resource('/users', 'Api\\UserController');
-Route::resource('/sectors', 'Api\\SectorController');
-Route::resource('/events', 'Api\\EventController');
-Route::resource('/places', 'Api\\PlaceController');
-Route::resource('/resources', 'Api\\ResourceController');
+
+Route::group(['middleware' => ['apiJwt']], function () {
+    Route::resource('/sectors', 'Api\\SectorController');
+  Route::resource('/events', 'Api\\EventController');
+  Route::resource('/places', 'Api\\PlaceController');
+  Route::resource('/resources', 'Api\\ResourceController');
+  /** */
+});
+/** */

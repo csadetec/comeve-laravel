@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Event;
 use App\Http\Controllers\Api\EventResourceController;
+use Illuminate\Support\Facades\Auth;
+
+//use Illuminat
 //$teste = new EventResourceController();
 class EventController extends Controller
 {
@@ -28,7 +31,8 @@ class EventController extends Controller
   public function store(Request $request)
   {
     $data = $request->only(['name', 'date', 'start', 'end', 'place_id']);
-    $data['user_id'] = 1;
+    $data['user_id'] = Auth::id();
+
     $resources = $request->itensResources;
 
     $event = new Event();
@@ -61,7 +65,10 @@ class EventController extends Controller
     
     $er = new EventResourceController();
 
+    //return $resources;
     $er->store($id, $resources);
+    
+    
     
     $event = Event::find($id);
 

@@ -13,10 +13,11 @@ class EventResourceController extends Controller
   {
     EventResource::where('event_id', $event_id )->delete();
 
+    //dd($resources);
     foreach ($resources as $r) {
       $er = new EventResource();
       $er->event_id = $event_id;
-      $er->resource_id = $r;
+      $er->resource_id = $r['id'];
       $er->save();
     }
   }

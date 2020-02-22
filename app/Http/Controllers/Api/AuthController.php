@@ -12,13 +12,19 @@ class AuthController extends Controller
   {
     $credentials = $request->only(['email', 'password']);
 
-    $user = User::where('email', $request->email)->get();
+    $user = User::where('email', $request->email)->first();
+
+    //return $credentials;
+    if(empty($user)){
+      return response()->json(['error' => 'Email not exist'], 401);
+    }
 
     if (!$token = auth('api')->attempt($credentials)) {
-      return response()->json(['error' => 'Unauthorized'], 401);
+      return response()->json(['error' => 'Password Invalid'], 401);
     }
 
     //$token
+    //return $this->respondWithToken($token);
     return $this->respondWithToken($token, $user);
   }
 
