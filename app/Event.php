@@ -23,4 +23,7 @@ class Event extends Model
     return $this->belongsToMany('App\Resource', 'events_resources');
   }
 
+  public function sector(){
+    return $this->belongsTo('App\Sector');
+  }
 }

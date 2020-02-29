@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Event;
+//use App\Resource;
 use App\Http\Controllers\Api\EventResourceController;
 use Illuminate\Support\Facades\Auth;
 
@@ -54,7 +55,11 @@ class EventController extends Controller
     $event->user = $event->user;
     $event->place = $event->place;
     $event->resources = $event->resources;
-
+    
+    foreach($event->resources as $r){
+      //echo '<pre>';
+      $r->sector = $r->sector;
+    }
     return $event;
   }
 
