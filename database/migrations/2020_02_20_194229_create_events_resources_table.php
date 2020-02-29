@@ -17,6 +17,7 @@ class CreateEventsResourcesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('event_id');
             $table->integer('resource_id');
+            $table->boolean('accept')->default(false);
             $table->timestamps();
         });
     }

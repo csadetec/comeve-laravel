@@ -23,7 +23,7 @@ Route::post('/login', 'Api\\AuthController@login');
 Route::resource('/users', 'Api\\UserController');
 
 Route::group(['middleware' => ['apiJwt']], function () {
-    Route::resource('/sectors', 'Api\\SectorController');
+  Route::resource('/sectors', 'Api\\SectorController');
   Route::resource('/events', 'Api\\EventController');
   Route::resource('/places', 'Api\\PlaceController');
   Route::resource('/resources', 'Api\\ResourceController');

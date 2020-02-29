@@ -11,7 +11,9 @@ class PlaceController extends Controller
 
   public function index()
   {
-    $places = Place::all();
+    //$places = Place::all();
+    $places = Place::orderBy('name', 'asc')->get();
+
 
     return $places;
   }
