@@ -16,7 +16,8 @@ class EventController extends Controller
 
   public function index()
   {
-    $events = Event::all();
+    //$events = Event::all();
+    $events = Event::orderBy('date', 'asc')->get();
 
     foreach($events as $r){
       $r->user = $r->user;
@@ -34,7 +35,7 @@ class EventController extends Controller
     $data = $request->only(['name', 'date', 'start', 'end', 'place_id']);
     $data['user_id'] = Auth::id();
 
-    $resources = $request->itensResources;
+    $resources = $request->resources;
 
     $event = new Event();
 
@@ -66,7 +67,7 @@ class EventController extends Controller
   public function update(Request $request, $id)
   {
     $data = $request->only(['name', 'date', 'start', 'end', 'place_id']);
-    $resources = $request->itensResources;
+    $resources = $request->resources;
     
     $er = new EventResourceController();
 

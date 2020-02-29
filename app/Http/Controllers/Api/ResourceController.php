@@ -11,7 +11,8 @@ class ResourceController extends Controller
 
   public function index()
   {
-    $resources = Resource::all();
+    //$resources = Resource::all();
+    $resources = Resource::orderBy('name', 'asc')->get();
 
     foreach($resources as $r){
       $r->sector = $r->sector;

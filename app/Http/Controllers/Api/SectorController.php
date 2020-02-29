@@ -11,7 +11,8 @@ class SectorController extends Controller
 
   public function index()
   {
-    $sectors = Sector::all();
+    $sectors = Sector::orderBy('name', 'asc')->get();
+    //$sectors = Sector::all();
 
     return $sectors;
   }

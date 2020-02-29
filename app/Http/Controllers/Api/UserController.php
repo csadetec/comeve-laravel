@@ -12,8 +12,8 @@ class UserController extends Controller
 
   public function index()
   {
-    $users = User::all();
-    //$users->sector = $users->sector;
+    //$users = User::all();
+    $users = User::orderBy('name', 'asc')->get();
     foreach($users as $r){
       $r->sector = $r->sector;
     }
