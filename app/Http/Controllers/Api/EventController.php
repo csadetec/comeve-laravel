@@ -56,12 +56,18 @@ class EventController extends Controller
     $event->user = $event->user;
     $event->place = $event->place;
     $event->resources = $event->resources;
-    
-    foreach($event->resources as $r){
-      //echo '<pre>';
+   // $event->resourcesTest = $event->resourcesTest;
+    $er = new EventResourceController();
+
+    // $er->getEventResouce($id, $event->resources);
+
+   
+    foreach($event->resources as $r){      //echo '<pre>';
+      $r->accept = $er->getEventResouce($id, $r['id']); 
       $r->sector = $r->sector;
     }
     return $event;
+    /** */
   }
 
   public function update(Request $request, $id)
@@ -72,14 +78,16 @@ class EventController extends Controller
     $er = new EventResourceController();
 
     //return $resources;
-    $er->store($id, $resources);
-    
-    
-    
-    $event = Event::find($id);
 
+    $er->store($id, $resources);
+    $event = Event::find($id);
     $event->update($data);
     $event->resources = $event->resources;
+       
+    foreach($event->resources as $r){      //echo '<pre>';
+      $r->accept = $er->getEventResouce($id, $r['id']); 
+      $r->sector = $r->sector;
+    }
 
 
     return $event;

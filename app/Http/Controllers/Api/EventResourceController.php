@@ -12,13 +12,21 @@ class EventResourceController extends Controller
   public function store($event_id, $resources)
   {
     EventResource::where('event_id', $event_id )->delete();
-
-    //dd($resources);
+    
     foreach ($resources as $r) {
       $er = new EventResource();
       $er->event_id = $event_id;
       $er->resource_id = $r['id'];
+      $er->accept = $r['accept'];
       $er->save();
     }
+    /** */
+  }
+
+  public function getEventResouce($event_id, $resource_id){
+
+    //$teste =  EventResource::where(['event_id' => $event_id, 'resource_id' => '1'])->get();
+    $er =   EventResource::where(['event_id'=>$event_id, 'resource_id' => $resource_id ])->first();
+    return $er['accept'];
   }
 }

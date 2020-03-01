@@ -20,7 +20,15 @@ class Event extends Model
   }
 
   public function resources(){
+    //return $this->belongsToMany('App\Resource', 'events_resources')->select('name', 'accept', 'sector_id', 'resource_id');
+    //return $this->belongsToMany('App\Resource', 'events_resources')->select('*');
     return $this->belongsToMany('App\Resource', 'events_resources');
+  }
+
+  
+
+  public function resourcesTest(){
+    return $this->belongsToMany('App\Resource', 'events_resources')->select('resource_id', 'accept');
   }
 
   public function sector(){
