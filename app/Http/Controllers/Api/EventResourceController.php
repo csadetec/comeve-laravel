@@ -11,22 +11,30 @@ class EventResourceController extends Controller
 
   public function store($event_id, $resources)
   {
-    EventResource::where('event_id', $event_id )->delete();
-    
+    //EventResource::where('event_id', $event_id )->delete();
+
     foreach ($resources as $r) {
-      $er = new EventResource();
-      $er->event_id = $event_id;
-      $er->resource_id = $r['id'];
-      $er->accept = $r['accept'];
-      $er->save();
+
+      $er = EventResource::where(['event_id' => $event_id, 'resource_id'=>$r['id']])->first();
+      if ($er) {
+        $er->accept = $r['accept'];
+        $er->save();        //$er->event_id = $event_id;
+        //$resource_id
+      } else {
+        $er = new EventResource();
+        $er->event_id = $event_id;
+        $er->resource_id = $r['id'];
+        $er->accept = $r['accept'];
+        $er->save();
+      }
     }
-    /** */
   }
 
-  public function getEventResouce($event_id, $resource_id){
+  public function getEventResouce($event_id, $resource_id)
+  {
 
     //$teste =  EventResource::where(['event_id' => $event_id, 'resource_id' => '1'])->get();
-    $er =   EventResource::where(['event_id'=>$event_id, 'resource_id' => $resource_id ])->first();
+    $er =   EventResource::where(['event_id' => $event_id, 'resource_id' => $resource_id])->first();
     return $er['accept'];
   }
 }
